@@ -15,17 +15,17 @@ RUN mkdir corecrypto_static && mv ccrng_static.c corecrypto_static/ccrng_static.
 RUN mkdir build; cd build; CC=clang CXX=clang++ cmake ..;
 WORKDIR /buildenv/corecrypto-2024/build
 RUN sed -i -E 's|^(all: CMakeFiles\/corecrypto_perf)|#\1|' CMakeFiles/Makefile2; sed -i -E 's|^(all: CMakeFiles\/corecrypto_test)|#\1|' CMakeFiles/Makefile2
-RUN make -j6; make install
+RUN make -j$(nproc); make install
 
 WORKDIR /buildenv
 
 RUN git clone --recursive https://github.com/microsoft/cpprestsdk; 
 WORKDIR /buildenv/cpprestsdk
 RUN sed -i 's|-Wcast-align||' "./Release/CMakeLists.txt"
-RUN mkdir build; cd build; cmake -DBUILD_SHARED_LIBS=0 -DWERROR=OFF ..; make -j6; make install
+RUN mkdir build; cd build; cmake -DBUILD_SHARED_LIBS=0 -DWERROR=OFF ..; make -j$(nproc); make install
 
 WORKDIR /buildenv/
 
-RUN git clone https://github.com/nih-at/libzip && cd libzip; mkdir build; cd build; cmake -DBUILD_SHARED_LIBS=0 ..; make -j6; make install
+RUN git clone https://github.com/nih-at/libzip && cd libzip; mkdir build; cd build; cmake -DBUILD_SHARED_LIBS=0 ..; make -j$(nproc); make install
 
 
