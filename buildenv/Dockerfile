@@ -1,4 +1,4 @@
-ARG IMAGE=arm64v8/alpine:3.15
+ARG IMAGE=alpine:3.22.1
 
 FROM $IMAGE
 
