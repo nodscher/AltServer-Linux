@@ -1,7 +1,6 @@
 ARG IMAGE=alpine:3.22.1
 
-FROM $IMAGE
-
+FROM $IMAGE AS buildenv
 RUN  apk add zsh git curl wget g++ clang boost-static ninja boost-dev cmake make sudo bash vim libressl-dev util-linux-dev zlib-dev zlib-static patch zstd-static util-linux-static
 
 RUN mkdir /buildenv
@@ -28,4 +27,14 @@ WORKDIR /buildenv/
 
 RUN git clone https://github.com/nih-at/libzip && cd libzip; mkdir build; cd build; cmake -DBUILD_SHARED_LIBS=0 ..; make -j$(nproc); make install
 
+FROM buildenv AS build
 
+ADD . /buildenv/altserver
+WORKDIR /buildenv/altserver
+RUN ls Makefile
+RUN rm -r build; mkdir build
+WORKDIR /buildenv/altserver/build
+RUN make -f ../Makefile -j$(nproc)
+
+FROM scratch AS export-stage
+COPY --from=build /buildenv/altserver/build/AltServer-* .
