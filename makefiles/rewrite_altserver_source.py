@@ -19,6 +19,9 @@ content = content.replace(b'boost::filesystem', b'std::filesystem')
 
 content = re.sub(br'plist_from_memory\s*\((.*)\)', br'plist_from_memory(\1, NULL)', content)
 
+# hack - might break something, but makes it so you don't need to trust the developer again on every install
+content = content.replace(b'bool shouldManageProfiles = (activeProfiles.has_value() || (application->provisioningProfile() != NULL && application->provisioningProfile()->isFreeProvisioningProfile()));', b'bool shouldManageProfiles = false;')
+
 if F.endswith('AltServerApp.cpp'):
 
     # MessageBox
