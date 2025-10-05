@@ -12,7 +12,11 @@ LDID_NEWROOT := $(BUILD_DIR)/ldid_patched
 
 include $(MAIN_DIR)/makefiles/AltWindowsShim.mak
 
-CFLAGS += -I$(ALTSIGN_ROOT) -I$(MINIZIP_ROOT) -I$(LDID_ROOT) -mno-sse
+CFLAGS += -I$(ALTSIGN_ROOT) -I$(MINIZIP_ROOT) -I$(LDID_ROOT)
+
+ifeq ($(shell uname -m),x86_64)
+CFLAGS += -mno-sse
+endif
 #CFLAGS += -DLDID_NOTOOLS # will lose some symbol if enable this
 
 CXXFLAGS = $(CFLAGS) -std=c++17
