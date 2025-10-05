@@ -17,6 +17,8 @@ content = content.replace(b'std::string_convert', b'std::wstring_convert')
 content = content.replace(b'boost/filesystem.hpp', b'filesystem')
 content = content.replace(b'boost::filesystem', b'std::filesystem')
 
+content = re.sub(br'plist_from_memory\s*\((.*)\)', br'plist_from_memory(\1, NULL)', content)
+
 if F.endswith('AltServerApp.cpp'):
 
     # MessageBox

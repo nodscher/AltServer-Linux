@@ -18,4 +18,14 @@ content = content.replace(b'localtime(', b'gmtime(')
 
 content = content.replace(b'winsock2.h', b'WinSock2.h')
 
+content = re.sub(br'plist_from_memory\s*\((.*)\)', br'plist_from_memory(\1, NULL)', content)
+
+
+# Always insert #include <vector> after #include <fstream> in Archiver.cpp
+if F.endswith("Archiver.cpp"):
+    content = content.replace(
+        b'#include <fstream>',
+        b'#include <fstream>\n#include <vector>'
+    )
+
 sys.stdout.buffer.write(content)
