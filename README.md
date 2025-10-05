@@ -22,7 +22,6 @@ The following environment var can be set for some special situation:
 
 ## Download
 
-- Precompiled static binary can be downloaded in Release ( also have a look at pre-release ;) )
 - Nightly version is available as Github Actions artifacts
 
 ## TODO / Special Features
@@ -36,7 +35,17 @@ The following environment var can be set for some special situation:
 
 ----
 
-## Advanced: Build Instruction (check Github Actions if you cannot build)
+## Build Instruction
+
+```
+git clone --recursive https://github.com/NyaMisty/AltServer-Linux
+cd AltServer-Linux
+docker buildx build -f buildenv/Dockerfile --output build .
+```
+
+---
+
+## Advanced: Manual Build Instruction
 
 - Preparation: `git clone --recursive https://github.com/NyaMisty/AltServer-Linux`
 
