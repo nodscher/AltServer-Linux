@@ -22,7 +22,7 @@ WORKDIR /buildenv
 RUN git clone --recursive https://github.com/microsoft/cpprestsdk; 
 WORKDIR /buildenv/cpprestsdk
 RUN sed -i 's|-Wcast-align||' "./Release/CMakeLists.txt"
-RUN mkdir build; cd build; cmake -DBUILD_SHARED_LIBS=0 -DWERROR=OFF ..; make -j$(nproc); make install
+RUN mkdir build; cd build; cmake -DBUILD_SHARED_LIBS=0 -DWERROR=OFF -DBUILD_TESTS=OFF -DBUILD_SAMPLES=OFF ..; make -j$(nproc); make install
 
 WORKDIR /buildenv/
 
