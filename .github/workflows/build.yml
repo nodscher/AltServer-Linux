@@ -9,12 +9,16 @@ jobs:
     runs-on: ${{ matrix.runner }}
     strategy:
       fail-fast: false
-      max-parallel: 2
+      max-parallel: 4
       matrix:
         include:
           - platform: amd64
             runner: ubuntu-latest
           - platform: arm64
+            runner: ubuntu-24.04-arm
+          - platform: "386"
+            runner: ubuntu-latest
+          - platform: arm
             runner: ubuntu-24.04-arm
 
     steps:
